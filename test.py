@@ -1,68 +1,47 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QStackedWidget
+import requests
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog, QLabel, QMessageBox
+from PyQt6.QtCore import Qt
 
-class HelpWindow(QWidget):
-    def __init__(self, stack):
-        super().__init__()
-        self.stack = stack
-        self.initUI()
-
-    def initUI(self):
-        layout = QVBoxLayout()
-        
-        label = QLabel('Help Window')
-        layout.addWidget(label)
-
-        info_button = QPushButton('Go to Info')
-        info_button.clicked.connect(self.gotoInfo)
-        layout.addWidget(info_button)
-
-        self.setLayout(layout)
-
-    def gotoInfo(self):
-        self.stack.setCurrentIndex(1)  # Switch to the Info window
-
-class InfoWindow(QWidget):
-    def __init__(self, stack):
-        super().__init__()
-        self.stack = stack
-        self.initUI()
-
-    def initUI(self):
-        layout = QVBoxLayout()
-        
-        label = QLabel('Info Window')
-        layout.addWidget(label)
-
-        back_button = QPushButton('Back to Help')
-        back_button.clicked.connect(self.goBack)
-        layout.addWidget(back_button)
-
-        self.setLayout(layout)
-
-    def goBack(self):
-        self.stack.setCurrentIndex(0)  # Switch back to the Help window
-
-class MainWindow(QWidget):
+class DownloaderApp(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Main Window')
+        self.initUI()
+    
+    def initUI(self):
+        self.setWindowTitle('GitHub File Downloader')
         self.setGeometry(300, 300, 400, 200)
-
-        # Stack to manage the two windows
-        self.stack = QStackedWidget(self)
-        self.help_window = HelpWindow(self.stack)
-        self.info_window = InfoWindow(self.stack)
-        
-        self.stack.addWidget(self.help_window)
-        self.stack.addWidget(self.info_window)
         
         layout = QVBoxLayout()
-        layout.addWidget(self.stack)
+        
+        self.infoLabel = QLabel('Click the button to download main.exe from GitHub', self)
+        layout.addWidget(self.infoLabel)
+        
+        self.downloadButton = QPushButton('Download main.exe', self)
+        self.downloadButton.clicked.connect(self.download_file)
+        layout.addWidget(self.downloadButton)
+        
         self.setLayout(layout)
+    
+    def download_file(self):
+        url = 'https://github.com/kimvjgd/kist_pyqt_app_2/raw/main/main.exe'
+        save_path, _ = QFileDialog.getSaveFileName(self, 'Save File', '', 'Executable Files (*.exe)')
+        
+        if save_path:
+            try:
+                response = requests.get(url, stream=True)
+                response.raise_for_status()  # Check for request errors
+                
+                with open(save_path, 'wb') as file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        file.write(chunk)
+                
+                QMessageBox.information(self, 'Success', 'File downloaded successfully!', QMessageBox.StandardButton.Ok)
+            except Exception as e:
+                QMessageBox.critical(self, 'Error', f'Failed to download file: {e}', QMessageBox.StandardButton.Ok)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    main_window = MainWindow()
-    main_window.show()
+    downloader = DownloaderApp()
+    downloader.show()
     sys.exit(app.exec())
