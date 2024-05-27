@@ -1,47 +1,55 @@
 import sys
 import requests
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog, QLabel, QMessageBox
-from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QComboBox, QLabel
+from PyQt6.QtGui import QFont
+from datetime import datetime
 
-class DownloaderApp(QWidget):
+
+class KibabApp(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-    
+
     def initUI(self):
-        self.setWindowTitle('GitHub File Downloader')
-        self.setGeometry(300, 300, 400, 200)
-        
         layout = QVBoxLayout()
         
-        self.infoLabel = QLabel('Click the button to download main.exe from GitHub', self)
-        layout.addWidget(self.infoLabel)
+        today = datetime.today()
+        today_str = 'kibab_' + today.strftime('%Y%m%d')
         
-        self.downloadButton = QPushButton('Download main.exe', self)
-        self.downloadButton.clicked.connect(self.download_file)
-        layout.addWidget(self.downloadButton)
+        
+        # Add a label
+        label = QLabel('오늘의 키밥 메뉴:')
+        temp_font = QFont()
+        temp_font.setPointSize(20)
+        label.setFont(temp_font)
+        layout.addWidget(label)
+
+        # Create a combo box
+        self.combo_box = QComboBox(self)
+        
+        # Fetch the Python file from GitHub
+        url = 'https://raw.githubusercontent.com/kimvjgd/kist_pyqt_app_2/main/kibab.py'
+        response = requests.get(url)
+        if response.status_code == 200:
+            # Create a dictionary to hold the executed variables
+            local_vars = {}
+            # Execute the content of the fetched file
+            exec(response.text, globals(), local_vars)
+            # Access the variable from the local_vars dictionary
+
+            kibab_20240528 = local_vars[today_str]
+            # Add items to the combo box from kibab_20240528
+            for item in kibab_20240528:
+                self.combo_box.addItem(item[0])
+        
+        layout.addWidget(self.combo_box)
         
         self.setLayout(layout)
-    
-    def download_file(self):
-        url = 'https://github.com/kimvjgd/kist_pyqt_app_2/raw/main/main.exe'
-        save_path, _ = QFileDialog.getSaveFileName(self, 'Save File', '', 'Executable Files (*.exe)')
-        
-        if save_path:
-            try:
-                response = requests.get(url, stream=True)
-                response.raise_for_status()  # Check for request errors
-                
-                with open(save_path, 'wb') as file:
-                    for chunk in response.iter_content(chunk_size=8192):
-                        file.write(chunk)
-                
-                QMessageBox.information(self, 'Success', 'File downloaded successfully!', QMessageBox.StandardButton.Ok)
-            except Exception as e:
-                QMessageBox.critical(self, 'Error', f'Failed to download file: {e}', QMessageBox.StandardButton.Ok)
+        self.setWindowTitle('Kibab Menu')
+        self.setGeometry(300, 300, 400, 200)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    downloader = DownloaderApp()
-    downloader.show()
+    kibab_app = KibabApp()
+    kibab_app.show()
     sys.exit(app.exec())
