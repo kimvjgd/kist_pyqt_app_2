@@ -31,15 +31,19 @@ class video_tab4(QWidget):
         # Button to load MOV file
         self.button_load = QPushButton('Load MOV File', self)
         self.button_load.clicked.connect(self.load_file)
-        layout.addWidget(self.button_load)
         
         # Label to show the selected file path
         self.label_file = QLabel('Select a MOV file to convert', self)
-        layout.addWidget(self.label_file)
+        self.label_file.setStyleSheet("font-size: 24px;")
         
         # Button to save MP4 file
         self.button_save = QPushButton('Convert and Save MP4 File', self)
         self.button_save.clicked.connect(self.save_file)
+
+
+
+        layout.addWidget(self.label_file)
+        layout.addWidget(self.button_load)
         layout.addWidget(self.button_save)
         
         self.setLayout(layout)

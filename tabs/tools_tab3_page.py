@@ -24,14 +24,20 @@ from PyQt6.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget, QToolTip
 class tools_tab3(QWidget):
     def __init__(self):
         super().__init__()
-        self.label = QLabel('Move the mouse to pick color', self)
+        self.label = QLabel('Move the mouse to pick color (inside or outside window)\n', self)
+        self.label.setStyleSheet("font-size: 20px;")
         self.current_color_label = QLabel(f'current color : {None}')
+        self.current_color_label.setStyleSheet("font-size: 24px;")
         self.color_display = QLabel(self)
-        self.color_display.setFixedSize(100, 100)
+        self.color_display.setFixedSize(400, 200)
         self.layout = QVBoxLayout()
+        self.layout.addStretch(1)
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.current_color_label)
+        self.layout.addStretch(1)
         self.layout.addWidget(self.color_display)
+        self.layout.addStretch(1)
+
         self.setLayout(self.layout)
 
         self.setMouseTracking(True)
@@ -50,11 +56,3 @@ class tools_tab3(QWidget):
             self.current_color_label.setText(f'current color : {color.name()}')
 
             # QToolTip.showText(pos, f'Color: {color.name()}')
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = ColorPickerWidget()
-    window.setGeometry(300, 300, 400, 200)
-    window.setWindowTitle('Color Picker Example')
-    window.show()
-    sys.exit(app.exec_())

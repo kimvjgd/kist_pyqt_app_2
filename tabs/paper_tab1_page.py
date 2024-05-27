@@ -14,5 +14,5 @@ class paper_tab1(QWidget):
     def __init__(self):
         super().__init__()
         layout = QVBoxLayout()
-        layout.addWidget(QLabel('논문을 찾아줘서 엑셀로 저장해주는 페이지입니다.'))
+        layout.addWidget(QLabel('진행 중입니다.\n\n보안 & 저널마다 포맷이 달라서.... 꽤나 걸릴 것 같은데\n\n흠... 노력중..!'))
         self.setLayout(layout)
