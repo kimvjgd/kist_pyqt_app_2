@@ -30,6 +30,7 @@ class KibabApp(QWidget):
         # Fetch the Python file from GitHub
         url = 'https://raw.githubusercontent.com/kimvjgd/kist_pyqt_app_2/main/kibab.py'
         response = requests.get(url)
+        print(response.text)
         if response.status_code == 200:
             # Create a dictionary to hold the executed variables
             local_vars = {}
@@ -38,9 +39,10 @@ class KibabApp(QWidget):
             # Access the variable from the local_vars dictionary
 
             kibab_20240528 = local_vars[today_str]
+            print(kibab_20240528)
             # Add items to the combo box from kibab_20240528
             for item in kibab_20240528:
-                self.combo_box.addItem(item[0])
+                self.combo_box.addItem(item)
         
         layout.addWidget(self.combo_box)
         
