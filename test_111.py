@@ -34,12 +34,12 @@ class KibabApp(QWidget):
         if response.status_code == 200:
             local_vars = {}
             exec(response.text, globals(), local_vars)
-            kibab_20240528 = local_vars['kibab_20240528']
+            # kibab_20240528 = local_vars['kibab_20240528']
             
             # 메뉴 아이템 추가
-            self.addMenuItems(menu_table, kibab_20240528[0], 0)  # 조식
-            self.addMenuItems(menu_table, kibab_20240528[1:4], 1)  # 중식
-            self.addMenuItems(menu_table, kibab_20240528[4], 2)  # 석식
+            # self.addMenuItems(menu_table, kibab_20240528[0], 0)  # 조식
+            # self.addMenuItems(menu_table, kibab_20240528[1:4], 1)  # 중식
+            # self.addMenuItems(menu_table, kibab_20240528[4], 2)  # 석식
 
         menu_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         menu_table.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)

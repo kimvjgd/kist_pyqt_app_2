@@ -23,7 +23,7 @@ class kibab_tab5(QWidget):
 
     def initUI(self):
         today = datetime.today()
-        today_str = 'kibab_' + today.strftime('%Y%m%d')
+        # today_str = 'kibab_' + today.strftime('%Y%m%d')
         url = 'https://raw.githubusercontent.com/kimvjgd/kist_pyqt_app_2/main/kibab.py'
         response = requests.get(url)
         print(response.text)
@@ -34,12 +34,12 @@ class kibab_tab5(QWidget):
             exec(response.text, globals(), local_vars)
             # Access the variable from the local_vars dictionary
 
-            kibab_20240528 = local_vars[today_str]
-            print(kibab_20240528)
+            # kibab_20240528 = local_vars[today_str]
+            # print(kibab_20240528)
             # Add items to the combo box from kibab_20240528
-            breakfast_menu = [kibab_20240528[0]]
-            lunch_menu = kibab_20240528[1:4]
-            dinner_menu = [kibab_20240528[4]]
+            # breakfast_menu = [kibab_20240528[0]]
+            # lunch_menu = kibab_20240528[1:4]
+            # dinner_menu = [kibab_20240528[4]]
 
         layout = QVBoxLayout()
         # 타이틀 레이블

@@ -14,7 +14,7 @@ class KibabApp(QWidget):
         layout = QVBoxLayout()
         
         today = datetime.today()
-        today_str = 'kibab_' + today.strftime('%Y%m%d')
+        # today_str = 'kibab_' + today.strftime('%Y%m%d')
         
         
         # Add a label
@@ -55,3 +55,4 @@ if __name__ == '__main__':
     kibab_app = KibabApp()
     kibab_app.show()
     sys.exit(app.exec())
+        

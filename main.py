@@ -7,6 +7,7 @@ import tabs.tools_tab3_page as page3
 import tabs.video_tab4_page as page4
 import tabs.kibab_tab5 as page5
 import tabs.help_tab6_page as page6
+import tabs.osmosis_tab7_page as page7
 from qt_material import apply_stylesheet
 import sys
 
@@ -26,6 +27,7 @@ class KistApp(QWidget):
         self.video_tab4 = page4.video_tab4()
         self.kibab_tab5 = page5.kibab_tab5()
         self.help_tab6 = page6.help_tab6()
+        self.osmosis_tab7 = page7.osmosis_tab6()
 
         self.tabs = QTabWidget()
         self.tabs.addTab(self.paper_tab1, '논문 검색')
@@ -34,6 +36,7 @@ class KistApp(QWidget):
         self.tabs.addTab(self.video_tab4, '비디오 변환')
         self.tabs.addTab(self.kibab_tab5, '오늘의 키밥')
         self.tabs.addTab(self.help_tab6, 'Help')
+        self.tabs.addTab(self.osmosis_tab7, 'Osmosis_Exp')
         self.tabs.setTabPosition(QTabWidget.TabPosition.North)
         self.tabs.setTabShape(QTabWidget.TabShape.Rounded)
 
@@ -56,6 +59,8 @@ class KistApp(QWidget):
         self.shortcut5.activated.connect(lambda: self.tabs.setCurrentIndex(4))
         self.shortcut6 = QShortcut(QKeySequence(Qt.KeyboardModifier.ControlModifier | Qt.Key.Key_6), self)
         self.shortcut6.activated.connect(lambda: self.tabs.setCurrentIndex(5))
+        self.shortcut6 = QShortcut(QKeySequence(Qt.KeyboardModifier.ControlModifier | Qt.Key.Key_7), self)
+        self.shortcut6.activated.connect(lambda: self.tabs.setCurrentIndex(6))
 
 
 app = QApplication(sys.argv)
