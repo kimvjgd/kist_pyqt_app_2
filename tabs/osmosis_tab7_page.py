@@ -11,13 +11,13 @@ class osmosis_tab6(QWidget):
         self.nullnuli_path2_dimension = 0.442
         self.nullnuli_path3_dimension = 0.180118
         self.nullnuli_loop_dimension = 1.256802
-        self.nullnuli_overall_dimension = 40.12762
+        self.nullnuli_overall_dimension = 40.56962
         
         self.kkobuli_path1_dimension = 0.046862
         self.kkobuli_path2_dimension = 0.261
         self.kkobuli_path3_dimension = 0.045029
         self.kkobuli_loop_dimension = 0.613892
-        self.kkobuli_overall_dimension = 30.67206
+        self.kkobuli_overall_dimension = 30.93306
         super().__init__()
 
         self.initUI()
@@ -159,7 +159,7 @@ class osmosis_tab6(QWidget):
             part1 = float(self.nulnuli_1_part_edit.text())
             part2 = float(self.nulnuli_2_part_edit.text())
             part3 = float(self.nulnuli_3_part_edit.text())
-            del_v = self.nullnuli_loop_dimension * loop_value + part1 * self.nullnuli_path1_dimension + part2 * self.nullnuli_path2_dimension + part3 * self.nullnuli_path3_dimension
+            del_v = self.nullnuli_loop_dimension * loop_value + part1 * self.nullnuli_path1_dimension + part2 * self.nullnuli_path2_dimension + part3 * self.nullnuli_path3_dimension + self.nullnuli_path2_dimension
             v_air = self.nullnuli_overall_dimension - del_v
             current_pressure = 101325 * self.nullnuli_overall_dimension / v_air
             self.nulnuli_del_v_label.setText(f"{del_v}")
@@ -178,7 +178,7 @@ class osmosis_tab6(QWidget):
             part1 = float(self.kkobuli_1_part_edit.text())
             part2 = float(self.kkobuli_2_part_edit.text())
             part3 = float(self.kkobuli_3_part_edit.text())
-            del_v = self.kkobuli_loop_dimension * loop_value + part1 * self.kkobuli_path1_dimension + part2 * self.kkobuli_path2_dimension + part3 * self.kkobuli_path3_dimension
+            del_v = self.kkobuli_loop_dimension * loop_value + part1 * self.kkobuli_path1_dimension + part2 * self.kkobuli_path2_dimension + part3 * self.kkobuli_path3_dimension + self.kkobuli_path2_dimension
             v_air = self.kkobuli_overall_dimension - del_v
             current_pressure = 101325 * self.kkobuli_overall_dimension / v_air
             self.kkobuli_del_v_label.setText(f"{del_v}")
